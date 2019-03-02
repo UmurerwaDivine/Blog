@@ -1,15 +1,15 @@
-# Pitches
-is a web appliction that displays a list of pitches from the users.
+# Blog
+is a web appliction that displays quotes and you can post anything.
 ## description
 
 With the application, a user will be able to:
 
-See various new pitches and select the ones they prefer to comment or vote.
+See random quotes,posts and select the ones they prefer to comment .
 ### BDD
 
-Add pitches	click `add pitch` to add your own pitch
+Add post click `add post` to add your own posts
 Add comment	`Click` to add new comment and view other comment.
-
+click on `subscribe` to receive new posts
 ### Author 
 
 Umurerwa Divine
