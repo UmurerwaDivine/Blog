@@ -105,7 +105,7 @@ class Comment(db.Model):
         return comments
 
 class Subscribe(db.Model):
-    __tablename__ = 'subscribes'
+    __tablename__ = 'subscribes' 
 
     id = db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String(255),unique = True,index = True)
