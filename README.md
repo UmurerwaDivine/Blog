@@ -11,7 +11,7 @@ Add post click `add post` to add your own posts
 Add comment	`Click` to add new comment and view other comment.
 click on `subscribe` to receive new posts
 ### Author  
-
+ 
 Umurerwa Divine
 ### Contact Information
 ```
