@@ -110,7 +110,7 @@ class Subscribe(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String(255),unique = True,index = True)
     blog_id = db.Column(db.Integer,db.ForeignKey("blogs.id"))
-
+ 
 # class VoteUp(db.Model):
 #      __tablename__ = 'voteups'
 
