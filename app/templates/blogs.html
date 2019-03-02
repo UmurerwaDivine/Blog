@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+<!-- {% import "bootstrap/wtf.html" as wtf %} -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block styles%}
+        {{ super() }}
+        <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
+        <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+        {% endblock %}
+</head>
+<body>
+    {%block content%}
+    {%for blog in blogs%}
+    <h4>{{blog.username}}</h4>
+    <ul>
+       
+        <li>{{blog.description}}</li>
+
+    </ul>
+    {%endfor%}
+    {%endblock%}
+</body>
+</html>

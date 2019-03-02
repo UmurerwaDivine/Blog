@@ -1,0 +1,3 @@
+Hello {{user.username}}
+
+you've subscribed to this Blog
