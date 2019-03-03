@@ -68,6 +68,7 @@ class Blog(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     description = db.Column(db.String(255))
     username = db.Column(db.String(255))
+    pic_path = db.Column(db.String())
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship('Comment',backref = 'blog',lazy = "dynamic")
     subscribes = db.relationship('Subscribe',backref = 'blog',lazy = "dynamic")

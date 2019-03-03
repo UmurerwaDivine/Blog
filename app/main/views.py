@@ -28,11 +28,11 @@ def subscribe():
         db.session.add(subscribe)
         db.session.commit()
 
-        mail_message("Welcome to pitches","email/welcome_user",subscribe.email,subscribe=subscribe)
+        mail_message("New Post","sender_mail/sender_mail",subscribe.email,subscribe=subscribe)
 
         return redirect(url_for('main.index'))
         
-    return render_template('main/sender_mail.html',subscribe_form = form)
+    return render_template('main/sender.html',subscribe_form = form)
 @main.route('/')
 def index():
 
@@ -60,7 +60,12 @@ def new_blog():
     if form.validate_on_submit():
         username = form.username.data
         description = form.description.data
-
+    #     blog = Blog.query.filter_by(blog_id=id).first()
+    # if 'photo' in request.files:
+    #     filename = photos.save(request.files['photo'])
+    #     path = f'photos/{filename}'
+    #     blog.pic_path = path
+    #     db.session.commit()
         # Updated review instance
         new_blog = Blog(description=description,username=username,user_id=current_user.id)
 
@@ -75,6 +80,27 @@ def show_blog():
  blogs = Blog.get_blogs()
  print(blogs)
  return render_template('new_blog.html', blogs=blogs)
+
+@main.route('/update/blog',methods = ['GET','POST'])
+@login_required
+def update_blog():
+    blogs = Blog.query.filter_by(blog_id = id).first()
+    if blogs is None:
+        abort(404)
+
+    form = BlogForm()
+
+    if form.validate_on_submit():
+        blogs.description = form.description.data
+
+        db.session.add(blogs)
+        db.session.commit()
+
+        return redirect(url_for('.index',blogs=blogs))
+
+    return render_template('new_blog.html',blog_form=form)
+
+
 @main.route('/comment/new/<int:id>',methods= ['GET','POST'])
 
 def new_comment(id):

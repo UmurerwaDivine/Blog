@@ -1,3 +1,0 @@
-Hello {{user.username}}
-Welcome to our Blog
-We have just seen you have signed up for our application and want to welcome you to the family. Please enjoy the reviews of all your  favourite quotes and posts you can comment and you can also write yours by signing up first.

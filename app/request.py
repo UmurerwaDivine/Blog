@@ -24,8 +24,9 @@ def get_quote():
 
         quote_object = None
         if quote_details_response:
-            id = quote_details_response.get('id')
+           
             author = quote_details_response.get('author')
+            id = quote_details_response.get('id')
             quote = quote_details_response.get('quote')
             
             quote_object = Quote(id,author,quote)
