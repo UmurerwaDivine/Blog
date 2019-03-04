@@ -9,7 +9,7 @@ class BlogForm(FlaskForm):
     username = StringField('username', validators=[Required()])
     # category = SelectField('choose category',choices=[('pick-up-lines','pick-up-lines'),('Interview-pitch','Interview-pitch'),('other-pitch','other-pitch')])
     description = TextAreaField('Blogs ', validators=[Required()])
-    pic_path=FileField('choose image')
+    # pic_path=FileField('choose image')
     submit = SubmitField('Submit')
 class UpdateProfile(FlaskForm):
     bio = TextAreaField('tell us about you.',validators = [Required()])
@@ -25,3 +25,10 @@ class SubscribeForm(FlaskForm):
      def validate_email(self,data_field):
             if User.query.filter_by(email =data_field.data).first():
                 raise ValidationError('There is an account with that email')
+class UpdateForm(FlaskForm):
+
+    username = StringField('username', validators=[Required()])
+    # category = SelectField('choose category',choices=[('pick-up-lines','pick-up-lines'),('Interview-pitch','Interview-pitch'),('other-pitch','other-pitch')])
+    description = TextAreaField('Blogs ', validators=[Required()])
+    # pic_path=FileField('choose image')
+    submit = SubmitField('Submit')

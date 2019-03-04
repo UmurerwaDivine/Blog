@@ -1,3 +1,4 @@
-Hello{{blog.description}}
+Hello,
+here s a new post
 
-you've subscribed to this Blog
+you've subscribed to this Blog.

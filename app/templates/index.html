@@ -17,7 +17,7 @@
         {% block styles%}
         {{ super() }}
         <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
-        <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cookie|PT+Sans" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         {% endblock %}
         <!-- {% block new_pitch%}
@@ -40,11 +40,14 @@
   {% endfor %}
  
     <h3>Quotes</h3>
-    <h5>{{quote.author}}</h5>    
-    <li>{{quote.quote}}</li> 
+    <h5>Author:  </h5>  
+    <li>{{quote.author}}</li>  
+      <h5>Quote: </h5>
+          <li>{{quote.quote}}</li>
    
-    <ul>
+    
             <h3>Posts</h3>
+            <ul>  
              {%for blog  in blogs%} 
            
             <h5>{{blog.username}}</h5>    
@@ -52,7 +55,16 @@
            {% if blog.pic_path %}
 
     <img src="{{url_for('static',filename=blog.pic_path)}}" alt="" class="img-thumbnail">
+    <form method="post" enctype = "multipart/form-data">
+    <input type="file"  name="photo" class="form-control" required>
+</form>
     {%endif%} 
+
+ 
+   
+ 
+  
+   
            <a href="/comment/new/{{blog.id}}" class="btn">add comment</a>
         <a href="/comment{{blog.id}}" class="btn">view comments</a>
         <a href="/update/blog" class="btn">Edit Post</a>

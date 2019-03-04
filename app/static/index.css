@@ -1,6 +1,6 @@
-/* body {
-    background-image: url('https://wallpaperhd.wiki/wp-content/uploads/hd-backgrounds-websites-7f22bd1107b49b5eac20ce21b80d6489.jpg');
-   font-size: 30px;
+body {
+    background-image:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://newevolutiondesigns.com/images/freebies/nature-hd-background-4.jpg');
+   font-size: 25px;
    background-size: cover;
    font-family: 'Cookie', cursive;
 
@@ -8,16 +8,27 @@
 }
 li,h4{
     color:white;
-    font-size: 30px;
+    font-size: 25px;
+   
    
 }
 form{
 color: white;
+font-family: 'PT Sans', sans-serif;
+font-size: 16px;
 
 }
-a:link{ */
-    /* font-size: 30px;
-} */
+a:link{
+     font-size: 30px;
+}
 #pi{
     font-size:10px;
+}
+h5,h3{
+    color:white;
+    font-size: 20px;
+    font-family: 'PT Sans', sans-serif;
+}
+p{
+    color:white;
 }

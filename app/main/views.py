@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 from ..request import get_quote
-from .forms import BlogForm,UpdateProfile,CommentForm,SubscribeForm
+from .forms import BlogForm,UpdateProfile,CommentForm,SubscribeForm,UpdateForm
 from .. import db
 from ..models import User,Blog,Comment,Subscribe
 from flask_login import login_required,current_user
@@ -41,7 +41,7 @@ def subscribe():
         db.session.add(subscribe)
         db.session.commit()
 
-        mail_message("New Post","sender_mail/sender_mail",subscribe.email)
+        mail_message("Welcome","email/welcome_user",subscribe.email)
 
         return redirect(url_for('main.index'))
         
@@ -60,27 +60,28 @@ def new_blog():
     if form.validate_on_submit():
         username = form.username.data
         description = form.description.data
-        pic_path = form.pic_path.data
-        subscribes=Subscribe.query.all()
-        blogs = Blog.query.all()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        blogs.pic_path = path
-        db.session.commit()
+    #     pic_path = form.pic_path.data
+       
+    #     blogs = Blog.query.all()
+    # if 'photo' in request.files:
+    #     filename = photos.save(request.files['photo'])
+    #     path = f'photos/{filename}'
+    #     blogs.pic_path = path
+    #     db.session.commit()
         # Updated review instance
-        new_blog = Blog(description=description,username=username,user_id=current_user.id,pic_path=pic_path)
+        new_blog = Blog(description=description,username=username,user_id=current_user.id)
     
  
         # save pitch method
         new_blog.save_blogs()
+        subscribes=Subscribe.query.all()
+        for subscribe in subscribes:
+
+          mail_message("New Post","sender_mail/sender_mail",subscribe.email,new_blog=new_blog)
+
+
    
-        return redirect(url_for('.index',description=description,username=username,pic_path=pic_path ))
-        
-    for sender in subscribes:
-
-      mail_message("New Post","sender_mail/sender_mail",subscribe.email,user=subscribe,new_blog=new_blog)
-
+        return redirect(url_for('.index',description=description,username=username))
     return render_template('new_blog.html', blog_form=form)
 @main.route('/blog')
 def show_blog():
@@ -91,21 +92,22 @@ def show_blog():
 @main.route('/update/blog',methods = ['GET','POST'])
 @login_required
 def update_blog(id):
-    blogs = Blog.query.filter_by(blog_id = id).first()
+    blogs = Blog.query.filter_by(blog_id = id).all()
     if blogs is None:
         abort(404)
 
-    form = BlogForm()
+    form = UpdateForm()
 
     if form.validate_on_submit():
-        blogs.description = form.description.data
-
+        username = form.username.data
+        description = form.description.data
+        pic_path = form.pic_path.data
         db.session.add(blogs)
         db.session.commit()
 
         return redirect(url_for('.index',blogs=blogs))
 
-    return render_template('new_blog.html',blog_form=form)
+    return render_template('update_file.html',update_form=form)
 
 
 @main.route('/comment/new/<int:id>',methods= ['GET','POST'])
