@@ -29,6 +29,6 @@ def get_quote():
             id = quote_details_response.get('id')
             quote = quote_details_response.get('quote')
             
-            quote_object = Quote(id,author,quote)
+            quote_object = Quote(author,id,quote)
 
     return quote_object

@@ -71,7 +71,7 @@ class Blog(db.Model):
     pic_path = db.Column(db.String())
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship('Comment',backref = 'blog',lazy = "dynamic")
-    subscribes = db.relationship('Subscribe',backref = 'blog',lazy = "dynamic")
+    
     def __repr__(self):
         return f'User {self.description}'
     def save_blogs(self):
@@ -81,7 +81,10 @@ class Blog(db.Model):
     @classmethod
     def get_blogs(id):
         blogs = Blog.query.all()
-        return blogs      
+        return blogs
+    # @classmethod
+    # def update_blog(id):
+
 class Comment(db.Model):
 
     __tablename__ = 'comments'
@@ -101,8 +104,8 @@ class Comment(db.Model):
         db.session.commit()
 
     @classmethod
-    def get_comments(id):
-        comments = Comment.query.all()
+    def get_comments(cls,id):
+        comments = Comment.query.filter_by(blog_id=id).all()
         return comments
 
 class Subscribe(db.Model):
@@ -110,7 +113,7 @@ class Subscribe(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    blog_id = db.Column(db.Integer,db.ForeignKey("blogs.id"))
+    
  
 # class VoteUp(db.Model):
 #      __tablename__ = 'voteups'

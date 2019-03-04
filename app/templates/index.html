@@ -40,34 +40,33 @@
   {% endfor %}
  
     <h3>Quotes</h3>
+    <h5>{{quote.author}}</h5>    
+    <li>{{quote.quote}}</li> 
+   
     <ul>
-            {%for blog  in blogs%}  
+            <h3>Posts</h3>
+             {%for blog  in blogs%} 
+           
             <h5>{{blog.username}}</h5>    
            <li>{{blog.description}}</li> 
+           {% if blog.pic_path %}
+
+    <img src="{{url_for('static',filename=blog.pic_path)}}" alt="" class="img-thumbnail">
+    {%endif%} 
            <a href="/comment/new/{{blog.id}}" class="btn">add comment</a>
-        <a href="/comment" class="btn">view comments</a>
-          
+        <a href="/comment{{blog.id}}" class="btn">view comments</a>
+        <a href="/update/blog" class="btn">Edit Post</a>
+        
         {%endfor%}
-    </ul>
-    
+   <br>    
      
-    <h5>{{quote.author}}</h5>    
-   <li>{{quote.quote}}</li> 
-  
+     
+   
 
 <a href="/blog/new" class="btn btn-default">Add Blog</a>
 
-<!-- <div class="well">
-        <form >
-            <div class="form-group">
-            <input type="text" name="movie_query" placeholder="example@gmail.com" class="form-control">
-            <p id= "pi">subscribe be updated of new posts..by subscribing you accept our terms and conditions</p>
-        </div>
-           <input type="submit"  value="Subscribe" class="btn btn-default">
-           
-        </form>
-    
-    </div> -->
+
+
     <a href="/subscribe">Click here to Subscribe</a>
 {% endblock%}
 

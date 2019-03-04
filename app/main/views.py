@@ -6,7 +6,7 @@ from .. import db
 from ..models import User,Blog,Comment,Subscribe
 from flask_login import login_required,current_user
 from .. import db,photos
-from ..email import mail_message
+from ..sender_mail import mail_message
 
 
 
@@ -20,19 +20,7 @@ from ..email import mail_message
 
 #     message = 'Hello World'
 #     return render_template('index.html',message = message)
-@main.route('/subscribe',methods = ["GET","POST"])
-def subscribe():
-    form = SubscribeForm()
-    if form.validate_on_submit():
-        subscribe = Subscribe(email = form.email.data)
-        db.session.add(subscribe)
-        db.session.commit()
 
-        mail_message("New Post","sender_mail/sender_mail",subscribe.email,subscribe=subscribe)
-
-        return redirect(url_for('main.index'))
-        
-    return render_template('main/sender.html',subscribe_form = form)
 @main.route('/')
 def index():
 
@@ -44,8 +32,20 @@ def index():
     # comments = Comment.get_comments()
     title = 'Home - Welcome to The best Blogs Review Website Online'
 
-    return render_template('index.html', title = title, blogs=blogs,quote=quote)
+    return render_template('index.html', title = title,quote=quote,blogs=blogs)
+@main.route('/subscribe',methods = ["GET","POST"])
+def subscribe():
+    form = SubscribeForm()
+    if form.validate_on_submit():
+        subscribe = Subscribe(email = form.email.data)
+        db.session.add(subscribe)
+        db.session.commit()
 
+        mail_message("New Post","sender_mail/sender_mail",subscribe.email)
+
+        return redirect(url_for('main.index'))
+        
+    return render_template('sender.html',subscribe_form = form)
 # @main.route('/quotes/<int:id>')
 # def quotes(quote):
 
@@ -60,20 +60,27 @@ def new_blog():
     if form.validate_on_submit():
         username = form.username.data
         description = form.description.data
-    #     blog = Blog.query.filter_by(blog_id=id).first()
-    # if 'photo' in request.files:
-    #     filename = photos.save(request.files['photo'])
-    #     path = f'photos/{filename}'
-    #     blog.pic_path = path
-    #     db.session.commit()
+        pic_path = form.pic_path.data
+        subscribes=Subscribe.query.all()
+        blogs = Blog.query.all()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        blogs.pic_path = path
+        db.session.commit()
         # Updated review instance
-        new_blog = Blog(description=description,username=username,user_id=current_user.id)
-
+        new_blog = Blog(description=description,username=username,user_id=current_user.id,pic_path=pic_path)
+    
+ 
         # save pitch method
         new_blog.save_blogs()
-        return redirect(url_for('.index',description=description,username=username ))
+   
+        return redirect(url_for('.index',description=description,username=username,pic_path=pic_path ))
+        
+    for sender in subscribes:
 
- 
+      mail_message("New Post","sender_mail/sender_mail",subscribe.email,user=subscribe,new_blog=new_blog)
+
     return render_template('new_blog.html', blog_form=form)
 @main.route('/blog')
 def show_blog():
@@ -83,7 +90,7 @@ def show_blog():
 
 @main.route('/update/blog',methods = ['GET','POST'])
 @login_required
-def update_blog():
+def update_blog(id):
     blogs = Blog.query.filter_by(blog_id = id).first()
     if blogs is None:
         abort(404)
@@ -109,7 +116,7 @@ def new_comment(id):
         username = form.username.data
         description = form.description.data
         posted = form.posted.data
-        comments = Comment.query.filter_by(blog_id=id).all()
+        # comments = Comment.query.filter_by(id=id).all()
  
 
         # Updated review instance
@@ -121,7 +128,7 @@ def new_comment(id):
 
  
     return render_template('new_comment.html',comment_form=form)
-@main.route('/comment',methods= ['GET','POST'])
+@main.route('/comment/<int:id>',methods= ['GET','POST'])
 def show_comment():
 
  comments = Comment.get_comments()

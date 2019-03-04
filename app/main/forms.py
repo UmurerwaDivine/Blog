@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,TextAreaField,SubmitField,SelectField
+from wtforms import StringField,TextAreaField,SubmitField,SelectField,FileField
 from wtforms.validators import Required,Email
 from wtforms.fields.html5 import DateField
 from wtforms import ValidationError
@@ -9,6 +9,7 @@ class BlogForm(FlaskForm):
     username = StringField('username', validators=[Required()])
     # category = SelectField('choose category',choices=[('pick-up-lines','pick-up-lines'),('Interview-pitch','Interview-pitch'),('other-pitch','other-pitch')])
     description = TextAreaField('Blogs ', validators=[Required()])
+    pic_path=FileField('choose image')
     submit = SubmitField('Submit')
 class UpdateProfile(FlaskForm):
     bio = TextAreaField('tell us about you.',validators = [Required()])
