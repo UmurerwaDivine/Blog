@@ -92,7 +92,7 @@ def show_blog():
 @main.route('/update/blog',methods = ['GET','POST'])
 @login_required
 def update_blog(id):
-    blogs = Blog.query.filter_by(blog_id = id).all()
+    blogs = Blog.query.filter_by(id = id).all()
     if blogs is None:
         abort(404)
 
@@ -130,6 +130,11 @@ def new_comment(id):
 
  
     return render_template('new_comment.html',comment_form=form)
+# @main.route('/blog/<int:id>')
+# def one_blog(id):
+#    blogs = Blog.query.filter_by(id = id).first()
+#    comments = Comment.query.filter_by(id=id)
+#    return render_template('new_blog.html',comments=comments, blogs=blogs)
 @main.route('/comment/<int:id>',methods= ['GET','POST'])
 def show_comment():
 
