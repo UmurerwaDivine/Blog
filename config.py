@@ -4,7 +4,7 @@ class Config:
 
     QUOTE_API_BASE_URL = 'http://quotes.stormconsultancy.co.uk/random.json'
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://divine:dDivine123@@localhost/blogs'
+   
     UPLOADED_PHOTOS_DEST ='app/static/photos'
     #  email configurations
     MAIL_SERVER = 'smtp.googlemail.com'
@@ -16,12 +16,12 @@ class Config:
 
 
 class ProdConfig(Config):
-    pass
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://divine:dDivine123@@localhost/blogs'
 
 
 class DevConfig(Config):
+   
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://divine:dDivine123@@localhost/blogs'
-    
 
     DEBUG = True
 
